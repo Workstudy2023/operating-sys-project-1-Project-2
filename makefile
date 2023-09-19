@@ -1,7 +1,7 @@
 CC	= gcc -g3
 CFLAGS  = -g3
-TARGET1 = child
-TARGET2 = parent 
+TARGET1 = worker
+TARGET2 = oss 
 
 OBJS1	= child.o
 OBJS2	= parent.o
