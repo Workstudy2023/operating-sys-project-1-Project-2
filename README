@@ -8,14 +8,7 @@ The oss executable launches worker processes and maintains a simulated system cl
 Accessing the Development Environment
 Prerequisites:
 
-•	An SSH client installed on your local machine.
-Instructions:
-1.	Open your terminal or command prompt.
-2.	Use the following command to access the university's remote server:
-
-ssh [your_username]@[university_server_address] 
-Replace [your_username] with your university system username and [university_server_address] with the provided address by the university.
-3.	Once logged in, navigate to the project directory.
+It runs on any Linux machine
 
 Setup and Execution
 
