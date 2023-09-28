@@ -1,31 +1,70 @@
-Simulated System Clock Utility
+Operating Systems Project: Simulated System Clock and Worker Processes
+Overview
 
- Overview
+This project is an extension of a previously created utility that launched user processes with specific limits. In this iteration, we have introduced a simulated system clock in shared memory, and a Process Control Block (PCB) structure to maintain process details. There are two main executables: oss and worker.
 
-This project builds upon a previously designed utility to introduce new functionalities to manage and observe simulated system clock events. The main utility, oss, interacts with multiple worker processes and manages them using a dedicated system clock and a process table. This utility enables users to control and monitor the life cycles of these worker processes based on a custom-defined clock.
-Features
-•	Simulated System Clock: Independent of the system's main clock, this clock utilizes two integers stored in shared memory representing seconds and nanoseconds. Both are initialized to zero.
-•	Process Control Blocks (PCB): Each child process has a PCB maintained by oss. This table contains vital details like the child process' PID, and the time at which the process was forked.
-•	worker Processes: These child processes use the simulated system clock to determine their lifespan. Their life duration can be passed as command-line arguments.
+The oss executable launches worker processes and maintains a simulated system clock, while worker processes examine this clock and decide when to terminate based on provided durations.
 
-Structure
+Accessing the Development Environment
+Prerequisites:
 
-struct PCB { int occupied; // Indicator: True or False pid_t pid; // Process ID of the child int startSeconds; // Timestamp (in seconds) when forked int startNano; // Timestamp (in nanoseconds) when forked }; struct PCB processTable[20]; 
-Usage
-1.	Launching the main executable (oss):
-./oss 
-2.	Launching the worker directly (for testing): Pass the lifespan (in seconds and nanoseconds) as command-line arguments.
-./worker 5 500000 
-In the example above, the worker will determine its exit time based on the sum of the current system clock time and the 5.5 seconds provided.
+•	An SSH client installed on your local machine.
+Instructions:
+1.	Open your terminal or command prompt.
+2.	Use the following command to access the university's remote server:
 
-Dependencies
+ssh [your_username]@[university_server_address] 
+Replace [your_username] with your university system username and [university_server_address] with the provided address by the university.
+3.	Once logged in, navigate to the project directory.
 
-Ensure you have permissions to create shared memory spaces and are operating in an environment supporting POSIX system calls.
-Future Scope
-As the project evolves, more functionalities will be integrated to further leverage the simulated system clock and to provide more intricate control over the worker processes.
+Setup and Execution
 
-Future Scope
-As the project evolves, more functionalities will be integrated to further leverage the simulated system clock and to provide more intricate control over the worker processes.
+Prerequisites:
+ Clone the project git@github.com:Workstudy2023/operating-sys-project-1-Project-2.git
+•	Access to the development environment (as described above).
+•	Ensure the oss and worker executables are compiled and ready.
+
+Execution:
+
+1.	To run the main executable oss: oss [-h] [-n proc] [-s simul] [-t timelimit]
+
+
+Project Structure
+Simulated System Clock
+The clock consists of two integers, one storing second and the other storing nanoseconds. Both values are initialized to zero and are present in shared memory.
+
+Process Control Block (PCB)
+
+Each PCB structure contains:
+
+•	occupied: Indicates if the PCB is in use.
+•	pid: The process ID of the child process.
+•	startSeconds: The time (seconds) when the child was forked.
+•	startNano: The time (nanoseconds) when the child was forked.
+
+Worker Process Behavior
+
+Each worker process checks the simulated system clock in shared memory and computes its termination time. It then repeatedly checks the clock until it's time for it to terminate.
+
+Additional Notes
+
+The project is designed to simulate an OS's system clock functionality and manage processes through a simulated environment by using a shared memory mechanism. Care has been taken to ensure synchronization, proper memory access, and cleanup.
+
+ Test
+I tested this project by executing the following three test with the respective parameters. I attached the results file for each test. The results for this test are included in the folder.
+
+First test 
+ ./oss -n 2  -s 2  -t 2
+results-n2-s2-t2.txt
+
+Second test
+./oss -n 10  -s 2  -t 5
+results-n10-s2-t5.txt
+
+Last test
+./oss -n 20 -s 2  -t 2
+results-n20-s2-t2.txt
+
 
 
 
