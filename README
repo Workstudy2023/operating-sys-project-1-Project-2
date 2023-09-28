@@ -1,78 +1,33 @@
+Simulated System Clock Utility
 
-# Operating System Project:  OSS and Worker Processes
-This is a simple project to understand the basics of managing child processes in Linux using C and creating a Makefile. The project consists of two executables: ‘oss’ (the parent process) and ‘worker’ (the child process).
-* Table of Contents
-* Getting Started 
-* Usage 
-* Implementaion Details
-* Makefile
-* Project Structure 
-* Contributor
+ Overview
 
- Project Overview
- ‘worker’ Process
-The worker process takes a single command-line argument specifying the number of iterations it should perform. For example:
-./worker 5
+This project builds upon a previously designed utility to introduce new functionalities to manage and observe simulated system clock events. The main utility, oss, interacts with multiple worker processes and manages them using a dedicated system clock and a process table. This utility enables users to control and monitor the life cycles of these worker processes based on a custom-defined clock.
+Features
+•	Simulated System Clock: Independent of the system's main clock, this clock utilizes two integers stored in shared memory representing seconds and nanoseconds. Both are initialized to zero.
+•	Process Control Blocks (PCB): Each child process has a PCB maintained by oss. This table contains vital details like the child process' PID, and the time at which the process was forked.
+•	worker Processes: These child processes use the simulated system clock to determine their lifespan. Their life duration can be passed as command-line arguments.
 
-The worker process will then execute a loop for the specified number of iterations. In each iteration, it will output its PID, its parent's PID, and the current iteration number before and after sleeping for one second.
-# oss Process (Parent)
+Structure
 
-The oss process is responsible for launching multiple worker processes with specific parameters. The parameters for oss are as follows:
-oss [-h] [-n proc] [-s simul] [-t iter]
+struct PCB { int occupied; // Indicator: True or False pid_t pid; // Process ID of the child int startSeconds; // Timestamp (in seconds) when forked int startNano; // Timestamp (in nanoseconds) when forked }; struct PCB processTable[20]; 
+Usage
+1.	Launching the main executable (oss):
+./oss 
+2.	Launching the worker directly (for testing): Pass the lifespan (in seconds and nanoseconds) as command-line arguments.
+./worker 5 500000 
+In the example above, the worker will determine its exit time based on the sum of the current system clock time and the 5.5 seconds provided.
 
--h: Display a help message.
--n proc: Number of total children to launch.
--s simul: Number of children allowed to run simultaneously.
--t iter: Number of iterations for each worker.
-For example, to launch ‘oss’ with 5 ‘worker’ processes, allowing a maximum of 3 to run simultaneously, and each ‘worker’ performing 7 iterations:
-oss -n 5 -s 3 -t 7
-‘oss’ will create child processes and manage their execution.
-# Getting Started
-1.	Clone this repository to your local machine:
-git clone <repository_url>
+Dependencies
 
-2. Navigate to the project directory:
-cd <project_directory>
+Ensure you have permissions to create shared memory spaces and are operating in an environment supporting POSIX system calls.
+Future Scope
+As the project evolves, more functionalities will be integrated to further leverage the simulated system clock and to provide more intricate control over the worker processes.
 
-3.	Compile the project using the provided Makefile (see Makefile).
-4.	Run the ‘oss’ process with the desired command-line parameters (see Usage).
+Future Scope
+As the project evolves, more functionalities will be integrated to further leverage the simulated system clock and to provide more intricate control over the worker processes.
 
-# Usage
-To compile and run the project, follow these steps:
-1.	Compile the project by running:
-make
-Run the oss process with the desired parameters. For example:
 
-./oss -n 5 -s 3 -t 7
-* 	-n: Number of total children to launch.
-* 	-s: Number of children allowed to run simultaneously.
-* 	-t: Number of iterations for each worker.
-*  The ‘oss’ process will manage the ‘worker’ processes, and you will see the output of the ‘worker’ processes' iterations.
-*   To terminate the program, press Ctrl + C.
 
-# Implementation Details
-* 	The oss process manages child processes (worker) and ensures that the maximum number of concurrent child processes (-s simul) is not exceeded.
-* 	Each worker process takes a command-line argument (-t iter) specifying the number of iterations it should perform.
-* 	The parent process (oss) waits for child processes to finish before launching new ones.
-The getopt library is used to parse command-line arguments.
-
-# Makefile
-The provided Makefile simplifies the compilation process. To compile both ‘oss’ and ‘worker’, run:
-
-*  Make
-
-To clean up the generated files, run:
-* make clean
-
-# Project Structure
-* 	oss.c: Contains the implementation of the oss process.
-* 	worker.c: Contains the implementation of the worker process.
-* 	Makefile: Defines compilation rules for the project.
-* 	README: This README file.
-
-# One Line Example of how to run the project:
-./oss -n 5 -s 3 -t 7
-* This command will run the ‘oss’ process, launching 5 ‘worker’ processes, allowing a maximum of 3 to run simultaneously, with each ‘worker’ performing 7 iterations.
-# Contibutor 
 * Christine Mckelvey
 
