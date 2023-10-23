@@ -1,74 +1,56 @@
-Project README: System Simulation
 
 
-Task are to develop a system simulation program in C. The program will consist of a parent process and multiple child processes that interact through shared memory and a message queue. The parent process will create child processes, each with specific tasks and durations. The child processes will access shared memory to determine the system's simulated clock time and calculate their termination time. They will communicate with the parent process through a message queue to report their progress and receive termination signals.
 
-Compilation and Execution
+Time-Based Process Scheduling Simulation with Message Queues
 
-To compile and run this project, follow these steps:
+This project is a simulation of the process scheduling aspect of an operating system. It focuses on time-based scheduling and employs message queues for synchronization. In this simulation, we prioritize the scheduling aspect while omitting other OS functionalities.
 
-Use the included Makefile to compile the parent and child programs:
+Overview
+
+The primary objective of this project is to demonstrate time-based process scheduling in a simplified operating system environment. The simulation comprises two main components:
+
+Parent Process (oss): This component is responsible for managing and scheduling child processes. It controls the creation, execution, and termination of child processes based on predefined scheduling criteria.
+Child Processes (worker): These processes represent individual tasks or jobs that are scheduled and managed by the parent process. Each child process is designed to execute for a specific time interval and communicates with the parent process using message queues.
+Prerequisites
+
+Before running the simulation, ensure that you have the following prerequisites:
+
+Linux Environment: This simulation is designed for Linux-based systems.
+Compilation
+
+To compile the oss (parent) and worker (child) programs, use the provided Makefile. Open your terminal, navigate to the project directory, and run the following command:
 
 make all
+This command will compile both oss and worker, generating executable files named oss and worker.
 
-This will compile both the parent and child programs and generate executable files named parent and child.
-Run the parent program:
+Execution
 
-./parent
+Follow these steps to execute the simulation:
 
-The parent process will manage the creation and termination of child processes.
+Compile the programs, as explained in the Compilation section.
+Run the parent program (oss) using the following command, replacing the placeholders with appropriate values:
+bash
+Copy code
+./oss -n <total_children> -s <max_simultaneous> -t <time_limit> -f <log_file>
+<total_children>: The total number of child processes to be launched.
+<max_simultaneous>: The maximum number of child processes allowed to run simultaneously.
+<time_limit>: The maximum execution time for child processes (in seconds).
+<log_file>: The name of the log file where simulation output will be recorded.
+The parent process (oss) will take charge of creating, executing, and terminating child processes based on the specified parameters.
+The simulation will produce output on both the screen and the designated log file.
+To gracefully terminate the simulation, you can use the Ctrl+C (SIGINT) signal. This will trigger the shutdown of all processes and the cleanup of associated resources.
+Project Structure
 
-To clean up the compiled files, you can use the following command:
+The project includes the following files:
 
-make clean
-
-This will remove the executable files (parent and child) and any object files.
-Parent Process (parent.c)
-
-The parent process is responsible for creating child processes and managing their activities. Here are the key features of the parent process:
-
-Creating Child Processes: The parent process creates child processes with specific tasks and arguments. It coordinates their execution.
-Shared Memory: It sets up shared memory for the simulated system clock, which child processes access to determine their termination time.
-Message Queue: The parent process establishes a message queue for communication with child processes. It sends messages to initiate tasks and receives messages to track their progress.
-Termination Control: The parent process monitors child processes and decides when they should terminate based on system clock time and messages received.
-Child Process (child.c)
-
-Child processes are created by the parent process to perform specific tasks. Here are the key features of a child process:
-
-Task Specification: Child processes are passed arguments indicating the number of seconds and nanoseconds they should run before termination.
-Shared Memory: They access shared memory to retrieve the simulated system clock time and calculate their termination time.
-Message Queue: Child processes communicate with the parent process through a message queue. They send progress updates and receive termination signals.
-Termination Logic: Child processes calculate their termination time and continuously check the system clock to decide when to terminate. They also send messages to the parent process to indicate their status.
-
-Workflow
-
-The workflow of the project is as follows:
-
-The parent process creates child processes, passing them arguments for the duration of their tasks.
-Child processes access shared memory to determine the simulated system clock time and calculate their termination time.
-Child processes periodically check the system clock and compare it to their termination time.
-When a child process completes its task or reaches its termination time, it sends a message to the parent process.
-The parent process receives messages from child processes and manages their termination based on the system clock and messages.
-The project continues until all child processes have completed their tasks and terminated.
-
-Makefile
-
-The Makefile included in this project simplifies the compilation and management of executable files. Here are some useful Makefile targets:
-
-make all (default target): Compiles both the parent and child programs, generating parent and child executables.
-make parent: Compiles only the parent program.
-make child: Compiles only the child program.
-make clean: Removes the compiled executable files and object files.
-You can customize the Makefile to suit your specific project requirements, such as adding additional compiler flags or source files.
-
-Additional Information
-
-This project may include further optimizations, error handling, and additional features according to your specific requirements.
-Make sure to consult the source code and code comments for more detailed information about the implementation.
-You can customize the tasks and parameters of child processes to suit your simulation needs.
+parent.c: The source code for the parent process (oss).
+child.c: The source code for the child process (worker).
+Makefile: A Makefile for compiling the parent and child programs.
+License
 
 
 
+Author
 
 * Christine Mckelvey
 
