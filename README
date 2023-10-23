@@ -18,6 +18,7 @@ Prerequisites
 Before running the simulation, ensure that you have the following prerequisites:
 
 Linux Environment: This simulation is designed for Linux-based systems.
+
 Compilation
 
 To compile the oss (parent) and worker (child) programs, use the provided Makefile. Open your terminal, navigate to the project directory, 
