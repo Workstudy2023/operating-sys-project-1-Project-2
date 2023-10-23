@@ -1,16 +1,18 @@
-
-
-
 Time-Based Process Scheduling Simulation with Message Queues
 
-This project is a simulation of the process scheduling aspect of an operating system. It focuses on time-based scheduling and employs message queues for synchronization. In this simulation, we prioritize the scheduling aspect while omitting other OS functionalities.
+This project is a simulation of the process scheduling aspect of an operating system. It focuses on time-based scheduling 
+and employs message queues for synchronization. In this simulation, we prioritize the scheduling aspect while omitting other 
+OS functionalities.
 
 Overview
 
-The primary objective of this project is to demonstrate time-based process scheduling in a simplified operating system environment. The simulation comprises two main components:
+The primary objective of this project is to demonstrate time-based process scheduling in a simplified operating system environment. 
+The simulation comprises two main components:
 
-Parent Process (oss): This component is responsible for managing and scheduling child processes. It controls the creation, execution, and termination of child processes based on predefined scheduling criteria.
-Child Processes (worker): These processes represent individual tasks or jobs that are scheduled and managed by the parent process. Each child process is designed to execute for a specific time interval and communicates with the parent process using message queues.
+Parent Process (oss): This component is responsible for managing and scheduling child processes. It controls the creation, execution, 
+and termination of child processes based on predefined scheduling criteria.
+Child Processes (worker): These processes represent individual tasks or jobs that are scheduled and managed by the parent process. 
+Each child process is designed to execute for a specific time interval and communicates with the parent process using message queues.
 Prerequisites
 
 Before running the simulation, ensure that you have the following prerequisites:
@@ -18,7 +20,8 @@ Before running the simulation, ensure that you have the following prerequisites:
 Linux Environment: This simulation is designed for Linux-based systems.
 Compilation
 
-To compile the oss (parent) and worker (child) programs, use the provided Makefile. Open your terminal, navigate to the project directory, and run the following command:
+To compile the oss (parent) and worker (child) programs, use the provided Makefile. Open your terminal, navigate to the project directory, 
+and run the following command:
 
 make all
 This command will compile both oss and worker, generating executable files named oss and worker.
@@ -29,8 +32,7 @@ Follow these steps to execute the simulation:
 
 Compile the programs, as explained in the Compilation section.
 Run the parent program (oss) using the following command, replacing the placeholders with appropriate values:
-bash
-Copy code
+
 ./oss -n <total_children> -s <max_simultaneous> -t <time_limit> -f <log_file>
 <total_children>: The total number of child processes to be launched.
 <max_simultaneous>: The maximum number of child processes allowed to run simultaneously.
@@ -38,7 +40,9 @@ Copy code
 <log_file>: The name of the log file where simulation output will be recorded.
 The parent process (oss) will take charge of creating, executing, and terminating child processes based on the specified parameters.
 The simulation will produce output on both the screen and the designated log file.
-To gracefully terminate the simulation, you can use the Ctrl+C (SIGINT) signal. This will trigger the shutdown of all processes and the cleanup of associated resources.
+To gracefully terminate the simulation, you can use the Ctrl+C (SIGINT) signal. This will trigger the shutdown of all processes and 
+the cleanup of associated resources.
+
 Project Structure
 
 The project includes the following files:
@@ -46,7 +50,7 @@ The project includes the following files:
 parent.c: The source code for the parent process (oss).
 child.c: The source code for the child process (worker).
 Makefile: A Makefile for compiling the parent and child programs.
-License
+
 
 
 
